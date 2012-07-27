@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="jquery-1.7.2.js" ></script>
+
+<script>
+
+$().ready(function(){
+	
+	$("#smtBtn").on("click" , function(){		
+		var url = "stpi/summary/" + $("#city").val();
+		$.getJSON(url, function(response){
+			alert(response.city +  response.temperature);
+			var msg = "The current temperature for the " + response.city + " is " + response.temperature; 
+			$("#msg").html(msg);
+		});
+	});
+	
+});
+
+</script>
+</head>
+<body>
+
+Enter the city : <input type="text" id="city" />
+<input type="button" id="smtBtn" value="Submit"/>
+
+<div id="msg" ></div>
+</body>
+</html>
