@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<script src="js/jquery-1.7.2.min.js" ></script>
+<script>
+
+function sendAjaxRequest()
+{
+	$.ajax({
+		url :"server.jsp" ,
+		dataType :"json",
+		data: {
+			name: $("#nameTxt").val()
+		} ,
+		success: function ( response ){
+			$("#resultsH2").text(response.output);
+		}	
+	}
+	);
+}
+
+$().ready(function(){
+	$("#convertUpperBtn").on("click" , sendAjaxRequest);
+});
+
+
+</script>
+</head>
+
+
+<body>
+<h1> Convert to uppercase using JSON</h1>
+
+Enter name : <input type="text" id="nameTxt" name="name" />
+<input type="button" value="Convert To UpperCase" id="convertUpperBtn" />
+
+<div id="resultsH2"></div>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<script src="js/jquery-1.7.2.min.js" ></script>
+<script>
+
+ function loadCountries()
+{
+	$.getJSON("countries.jsp","", function(response){
+		$('#countries').html("");
+		$(response.countries).each ( function() {			
+			$('#countries').append("<option value='"+ this + "'>" + this + "</option>");			
+		});
+
+	});
+} 
+
+/* function loadCountries()
+{
+	$.ajax({
+		url :"countries.jsp" ,
+		dataType :"json",		
+		success: function ( response ){
+//			alert( response.countries );
+			var select = $('#countries');
+			$(response.countries).each ( function() {
+//		alert(this);
+				select.append("<option value='"+ this + "'>" + this + "</option>");
+				
+			});
+		}	
+	}
+	);
+
+} */
+
+function loadCities()
+{
+	var countryName = $("#countries").val();
+	$.getJSON("city.jsp?countryName=" + countryName ,"", function(response){
+		$('#cities').html("");	
+		$(response.cities).each ( function() {				
+			$('#cities').append("<option>" + this + "</option>");
+			
+		});
+	});
+	
+	/* $.ajax({
+		url :"city.jsp" ,
+		dataType :"json",
+		data: {
+			countryName: $("#countries").val()
+		} ,
+		success: function ( response ){
+			alert("loading");
+			var select = $('#cities');
+			$('#cities').html("");
+			
+			$(response.cities).each ( function() {				
+				$('#cities').append("<option>" + this + "</option>");
+				
+			});
+		}	
+	}
+	); */
+
+}
+
+$().ready(function(){
+	loadCountries();
+	$('#countries').on("change", loadCities );
+
+});
+
+
+</script>
+</head>
+
+
+<body>
+<h1> Choose Country and City</h1>
+
+Choose Country : <select id="countries" >
+</select>
+
+
+Choose City: <select id="cities" >
+</select>
+
+<div id="resultsH2"></div>
+</body>
+</html>
