@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="jquery.mobile-1.1.1.css">
+<script src="jquery-1.7.2.js"></script>
+<script src="jquery.mobile-1.1.1.js"></script>
+<script src="countries.js" ></script>
+<script>
+var db = openDatabase("Todo App","Todo db","1.0",1000000);
+db.transaction(createTbl);
+var countries = ["India", "US" , "UK"];
+var query = "insert into countries values(?,?)";
+
+function saveCountries(countries){
+	alert(countries);
+	var query = "insert into countries values(?,?)";
+	db.transaction(function(txn){
+		for(var i=0;i<countries.length;i++){
+			var query = "insert into countries values(?,?)";
+			txn.executeSql(query,[(i+100)+"",countries[i]],function(tx){
+				console.log("inserted " + countries[i]);
+			});
+		}
+	});
+}
+
+		$().ready(function(){			
+			saveCountries(countries);
+			$.mobile.changePage("#countriesScreen");
+			$("#countriesList").listview("refresh");
+		});
+	</script>
+	</head>
+	<body>
+	
+	<div data-role="page" id="countriesScreen">
+		<div data-role="header">
+			<h1>Countries</h1>
+			<a data-theme="c" id="logoutLink">Logout</a>
+		</div>
+		<div data-role="content">
+			<ul data-role="listview" id="countriesList">
+			</ul>
+		</div>
+		<div data-role="footer">
+			<p>Copyrights reserved, 2012.</p>
+		</div>
+	</div>
+</body>
+</html>

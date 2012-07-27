@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery-1.7.2.js"></script>
+<script src="countries.js" ></script>
+<script>
+
+function createTbl(txn){
+	var query = "create table if not exists " + 
+	"countries(id unique, name)";
+	txn.executeSql(query);
+}
+
+
+
+function saveCountries(countries){
+	alert(countries);
+	var query = "insert into countries values(?,?)";
+	db.transaction(function(txn){
+		for(var i=0;i<countries.length;i++){
+			var query = "insert into countries values(?,?)";
+			txn.executeSql(query,[(i+100)+"",countries[i]],function(tx){
+				console.log("inserted " + countries[i]);
+			});
+		}
+	});
+}
+
+function loadCountries(){
+	alert(countries);
+	var query = "select * from countries";
+	txn.executeSql(query,[],function(tx,results){
+		var count = results.rows.length;
+		for(var i=0;i<count;i++){
+			var row = results.rows.item(i);
+			$("#countries").append("<option>").append(row.name).append("</option>");
+		}
+	}
+}
+
+var db = openDatabase("Todo App","Todo db","1.0",1000000);
+db.transaction(createTbl);
+var countries = ["India", "US" , "UK"];
+var query = "insert into countries values(?,?)";
+
+		$().ready(function(){	
+			loadCountries();
+			saveCountries(countries);			
+		});
+	</script>
+	</head>
+	<body>
+	
+	Countries : 
+	<select id="countries" >
+	
+	</select>
+	
+</body>
+</html>
