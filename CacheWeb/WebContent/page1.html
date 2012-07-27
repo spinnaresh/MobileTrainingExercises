@@ -2,6 +2,11 @@
 <html manifest="cache.manifest">
 <head>
 <script src="sample.js"></script>
+<script>
+window.applicationCache.addEventListener("error" , function(e) {
+	alert("Error fetching manifest.. You are offline");
+});
+</script>
 </head>
 <body>
 <h1>Page 1 Modified</h1>
